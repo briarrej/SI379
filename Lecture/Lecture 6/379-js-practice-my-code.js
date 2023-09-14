@@ -11,6 +11,8 @@
 
 function addOne(x) {
     // TODO: Write your code here
+    let z = 1;
+    return x+z;
 }
 
 
@@ -21,6 +23,8 @@ function addOne(x) {
 
 function largest(lst) {
     // TODO: Write your code here
+    if(lst.length=== 0) {return undefined;}
+
 }
 
 /**
