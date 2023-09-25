@@ -46,31 +46,32 @@ getRandomAnswer((answer) => {
 //      2.e. Append the <span> element to the guess's <div> element
 // 3. Append the guess's <div> element to the existing <div> with ID 'guesses'
 // 4. Try it out by calling displayGuessFeedback('hello') and displayGuessFeedback('world')
-function displayGuessFeedback(guess){
+function displayGuessFeedback(guess) {
     const guessDiv = document.createElement('div');
     guessDiv.classList.add('guess');
-
-    for(let i = 0; i<guess.length; i++){
-        const letter = guess[i].toUpperCase();
-        const correctLetter = correctAnswer[i].toUpperCase();
-
-        const letterSpan = document.createElement('span');
-        letterSpan.classList.add('letter');
-        if(letter === correctLetter){
-            letterSpan.classList.add('correct');
-        } else if(correctAnswer.toUpperCase().includes(letter)){
-            letterSpan.classList.add('present');
-        } else {
-            letterSpan.classList.add('absent');
-        }
-
-        letterSpan.textContent = letter;
-        guessDiv.appendChild(letterSpan);
+  
+    for (let i = 0; i < guess.length; i++) {
+      const letter = guess[i].toUpperCase();
+      const correctLetter = correctAnswer[i].toUpperCase();
+      const letterSpan = document.createElement('span');
+      letterSpan.classList.add('letter');
+  
+      if (letter === correctLetter) {
+        letterSpan.classList.add('correct');
+      } else if (correctAnswer.toUpperCase().includes(letter)) {
+        letterSpan.classList.add('present');
+      } else {
+        letterSpan.classList.add('absent');
+      }
+      
+      letterSpan.textContent = letter;
+      guessDiv.appendChild(letterSpan);
     }
-
+  
     document.getElementById('guesses').appendChild(guessDiv);
-}
+  }
 displayGuessFeedback('hello')
+displayGuessFeedback('world')
 // 
 // Step 2: Add an event listener to the input element that listens for the 'keydown' event.
 // 1. When the user presses the 'Enter' key, the event listener should:
@@ -85,25 +86,31 @@ displayGuessFeedback('hello')
 //              1.d.ii.B If the guess is not a valid word, show an error message: "{guess} is not a valid word." (where {guess} is the value of the guess)
 // 2. When the user presses key other than 'Enter', clear the info message (using the clearInfoMessage function)
 
-inputEl.addEventListener('keydown', function(e) {
-    if(e.key === 'Enter'){
-        const guess = inputEl.value;
-        if(guess.length != WORD_LENGTH){
-            showInfoMessage('Your guess must be '+ WORD_LENGTH +' letters long.');
-        } else if(guess.toUpperCase() === correctAnswer){
-            showInfoMessage('You win! The answer was '+correctAnswer);
-            inputEl.setAttribute('disabled', true);
-        } else {
-            inputEl.value = '';
-            isValidWord(guess, function(isValid){
-                if(isValid){
-                    displayGuessFeedback(guess);
-                } else {
-                    showInfoMessage(guess+' is not a valid word.');
-                }
-            });
+inputEl.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      const guess = inputEl.value;
+      if (guess.length !== WORD_LENGTH) {
+        showInfoMessage(`Your guess must be ${WORD_LENGTH} letters long.`);
+        return;
+      }
+      clearInfoMessage();
+  
+      isValidWord(guess, function (isValid) {
+        if(!isValid){
+          showInfoMessage(`"${guess}" is not a valid word.`);
+          return
         }
+  
+        if (guess.toUpperCase() === correctAnswer.toUpperCase()) {
+          showInfoMessage(`You win! The answer was "${correctAnswer}".`);
+          inputEl.setAttribute('disabled', true);
+          return;
+        }
+        
+        displayGuessFeedback(guess);
+        inputEl.value = '';
+      });
     } else {
-        clearInfoMessage();
+      clearInfoMessage();
     }
-});
+  });
