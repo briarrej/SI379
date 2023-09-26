@@ -18,7 +18,8 @@ getRandomAnswer((answer) => {
     //       it will keep focusing the input field every time you edit the file.
     //       You can comment it out.
 });
-
+// correctAnswer = "ABCDE"
+// console.log(correctAnswer)
 // TODO: Fill in your code here
 // Step 1: Define a function displayGuessFeedback(guess) that takes a guess and displays it on the page.
 // It should accept one argument (guess, a string) and will display feedback for that guess on the page.
@@ -52,6 +53,9 @@ function displayGuessFeedback(guess) {
   
     for (let i = 0; i < guess.length; i++) {
       const letter = guess[i].toUpperCase();
+     // console.log("Check correctAnswer:")
+     // console.log(correctAnswer)
+     // console.log("Done")
       const correctLetter = correctAnswer[i].toUpperCase();
       const letterSpan = document.createElement('span');
       letterSpan.classList.add('letter');
@@ -70,8 +74,11 @@ function displayGuessFeedback(guess) {
   
     document.getElementById('guesses').appendChild(guessDiv);
   }
-displayGuessFeedback('hello')
-displayGuessFeedback('world')
+
+//setTimeout(() => {displayGuessFeedback('hello')}, 5000)
+//displayGuessFeedback
+//displayGuessFeedback('hello')
+//displayGuessFeedback('world')
 // 
 // Step 2: Add an event listener to the input element that listens for the 'keydown' event.
 // 1. When the user presses the 'Enter' key, the event listener should:
@@ -88,6 +95,7 @@ displayGuessFeedback('world')
 
 inputEl.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
+      console.log(correctAnswer)
       const guess = inputEl.value;
       if (guess.length !== WORD_LENGTH) {
         showInfoMessage(`Your guess must be ${WORD_LENGTH} letters long.`);
@@ -104,6 +112,7 @@ inputEl.addEventListener('keydown', (e) => {
         if (guess.toUpperCase() === correctAnswer.toUpperCase()) {
           showInfoMessage(`You win! The answer was "${correctAnswer}".`);
           inputEl.setAttribute('disabled', true);
+          displayGuessFeedback(guess)
           return;
         }
         
