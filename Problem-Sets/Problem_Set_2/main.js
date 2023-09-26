@@ -86,7 +86,7 @@ displayGuessFeedback('world')
 //              1.d.ii.B If the guess is not a valid word, show an error message: "{guess} is not a valid word." (where {guess} is the value of the guess)
 // 2. When the user presses key other than 'Enter', clear the info message (using the clearInfoMessage function)
 
-inputEl.addEventListener('keydown', function (e) {
+inputEl.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       const guess = inputEl.value;
       if (guess.length !== WORD_LENGTH) {
@@ -95,7 +95,7 @@ inputEl.addEventListener('keydown', function (e) {
       }
       clearInfoMessage();
   
-      isValidWord(guess, function (isValid) {
+      isValidWord(guess, (isValid) => {
         if(!isValid){
           showInfoMessage(`"${guess}" is not a valid word.`);
           return
