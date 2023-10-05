@@ -1,6 +1,6 @@
 let eventList = [];
 let timerID =  null;
-let selectedIndex = 0
+//let selectedIndex = 0
 
 getUMEventsWithImages((events)=>{
     console.log(events);
