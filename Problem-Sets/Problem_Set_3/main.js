@@ -40,14 +40,14 @@ function setSelectIndex(index){
 
     const selectedEvent = eventList[index];
     document.getElementById("selected-title").textContent = selectedEvent.event_title;
-    document.getElementById("selected-title").href = selectedEvent.permalink;
-    document.getElementById("selected-image").src = selectedEvent.image_url;
+    document.getElementById("selected-title").setAttribute('href', selectedEvent.permalink);
+    document.getElementById("selected-image").setAttribute('src', selectedEvent.image_url);
     document.getElementById("selected-date").textContent = getReadableTime(selectedEvent.datetime_start);
     document.getElementById("selected-description").textContent = selectedEvent.description;
 
 
     clearTimeout(timerID)
-    timerID = setTimeout(function() {setSelectIndex((index+1)%eventList.length)}
+    timerID = setTimeout(()=>{setSelectIndex((index+1)%eventList.length)}
     ,10000)
     
 };
