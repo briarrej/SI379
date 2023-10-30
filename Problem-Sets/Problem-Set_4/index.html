@@ -2,22 +2,29 @@
 <html>
     <head>
         <script src="main.js" defer></script>
-        
+        <!-- Add this line to include Bootstrap CSS -->
+       <!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css"> -->
+
+        <!-- Add these lines to include Bootstrap JavaScript and its dependencies -->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script> --->
+        <script src = 'moment.js'></script>
+
     </head>
     <body>
         <h1>Trivia Game</h1>
         <p>Test your knowledge with these trivia questions!</p>
         <p>Score: <span id="score">0 of 0 </span></p>
-    
-        
+
+        <div id="feedback"> </div>
+
+        <div id="timer">00:00:00</div>
+        <button id="startButton" disabled>Start</button>
+        <button id="stopButton">Stop</button>
+        <button id="resetButton">Reset</button>
+
         <ol id="question-list">
-    
         </ol>
-    
         
-        <div id="feedback">
-            
-        </div>
     
       
     

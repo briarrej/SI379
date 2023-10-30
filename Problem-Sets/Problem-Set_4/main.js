@@ -72,6 +72,10 @@ function shuffleArray(array) {
 const apiUrl = 'https://the-trivia-api.com/v2/questions';
 let score = 0;
 let totalQuestions = 0;
+let timerInterval;
+let startTime;
+let running = false;
+let questionsAnswered = 0
 
 // Fetch questions and handle the response
 fetchWithCache(apiUrl)
@@ -153,7 +157,7 @@ function handleAnswerClick(selectedAnswer, correctAnswer, questionIndex) {
         score++;
         totalQuestions++;
     } else {
-        feedbackElement.textContent = 'Incorrect. The correct answer is: ' + correctAnswer;
+        feedbackElement.textContent = 'Incorrect. The correct answer is: ' + correctAnswer + '. You chose: ' + selectedAnswer + '.';
         feedbackElement.style.color = 'red';
         totalQuestions++;
     }
@@ -161,11 +165,67 @@ function handleAnswerClick(selectedAnswer, correctAnswer, questionIndex) {
     // Disable answer buttons for the current question to prevent further interaction
     const answerButtons = document.querySelectorAll('button.question-' + questionIndex);
     console.log(answerButtons);
-    answerButtons.forEach(button => {button.setAttribute('disabled', 'disabled'););
+    answerButtons.forEach(button => {button.setAttribute('disabled', 'disabled');});
 
     // Update the score display
     scoreElement.textContent = score + ' of ' + totalQuestions;
+
+    if (totalQuestions >= 10) {
+        clearInterval(timerInterval);
+        running = false;
+        console.log("Timer stopped because 10 questions are answered");
+    }
 }
 
 
 
+
+const timerElement = document.getElementById('timer');
+const startButton = document.getElementById('startButton');
+const stopButton = document.getElementById('stopButton');
+const resetButton = document.getElementById('resetButton');
+const questionList = document.getElementById('question-list').getElementsByTagName('li');
+
+startButton.addEventListener('click', startTimer);
+stopButton.addEventListener('click', stopTimer);
+resetButton.addEventListener('click', resetTimer);
+
+// Start the timer when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    startTimer();
+    startButton.disabled = true;
+});
+
+function startTimer() {
+    if (!running) {
+        startTime = moment();
+        running = true;
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+}
+
+function stopTimer() {
+    if (running) {
+        clearInterval(timerInterval);
+        running = false;
+    }
+}
+
+
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    running = false;
+    timerElement.textContent = '00:00:00';
+    questionsAnswered = 0;
+    checkQuestionsAnswered();
+    
+}
+
+
+function updateTimer() {
+    const currentTime = moment();
+    const duration = moment.duration(currentTime - startTime);
+    const formattedTime = moment.utc(duration.as('milliseconds')).format('HH:mm:ss');
+    timerElement.textContent = formattedTime;
+}
