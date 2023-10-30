@@ -106,7 +106,7 @@ function displayQuestions(questions) {
             const answerButton = document.createElement('button');
             answerButton.textContent = answer;
             answerButton.addEventListener('click', () => {
-            console.log('Button clicked:', answer);
+            //console.log('Button clicked:', answer);
             handleAnswerClick(answer, question.correctAnswer, index)});
 
             const answerItem = document.createElement('li');
@@ -159,8 +159,9 @@ function handleAnswerClick(selectedAnswer, correctAnswer, questionIndex) {
     }
 
     // Disable answer buttons for the current question to prevent further interaction
-    const answerButtons = document.querySelectorAll('.question-' + questionIndex + ' button');
-    answerButtons.forEach(button => button.setAttribute('disabled', 'disabled'));
+    const answerButtons = document.querySelectorAll('button.question-' + questionIndex);
+    console.log(answerButtons);
+    answerButtons.forEach(button => {button.setAttribute('disabled', 'disabled'););
 
     // Update the score display
     scoreElement.textContent = score + ' of ' + totalQuestions;
