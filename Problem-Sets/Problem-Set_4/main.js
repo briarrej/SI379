@@ -76,7 +76,8 @@ let timerInterval;
 let startTime;
 let running = false;
 let questionsAnswered = 0
-
+let timer = null;
+const timerElement = document.getElementById('timer');
 // Fetch questions and handle the response
 fetchWithCache(apiUrl)
     .then(response => response.json())
@@ -173,6 +174,8 @@ function handleAnswerClick(selectedAnswer, correctAnswer, questionIndex) {
     if (totalQuestions >= 10) {
         clearInterval(timerInterval);
         running = false;
+        const message = document.getElementById('message')
+        message.textContent = 'It took you ' + timerElement.textContent + ' to complete these questions.';
         console.log("Timer stopped because 10 questions are answered");
     }
 }
@@ -180,7 +183,7 @@ function handleAnswerClick(selectedAnswer, correctAnswer, questionIndex) {
 
 
 
-const timerElement = document.getElementById('timer');
+
 const startButton = document.getElementById('startButton');
 const stopButton = document.getElementById('stopButton');
 const resetButton = document.getElementById('resetButton');
@@ -219,6 +222,7 @@ function resetTimer() {
     timerElement.textContent = '00:00:00';
     questionsAnswered = 0;
     checkQuestionsAnswered();
+    startButton.disabled = false;
     
 }
 
@@ -228,4 +232,5 @@ function updateTimer() {
     const duration = moment.duration(currentTime - startTime);
     const formattedTime = moment.utc(duration.as('milliseconds')).format('HH:mm:ss');
     timerElement.textContent = formattedTime;
+    //return timerElement
 }
