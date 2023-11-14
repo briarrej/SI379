@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/SI379/Problem-Sets/ps6/build/static/css/main.22db94bf.css",
+    "main.js": "/SI379/Problem-Sets/ps6/build/static/js/main.06c68c28.js",
+    "static/js/787.e8eabc5b.chunk.js": "/SI379/Problem-Sets/ps6/build/static/js/787.e8eabc5b.chunk.js",
+    "index.html": "/SI379/Problem-Sets/ps6/build/index.html",
+    "main.22db94bf.css.map": "/SI379/Problem-Sets/ps6/build/static/css/main.22db94bf.css.map",
+    "main.06c68c28.js.map": "/SI379/Problem-Sets/ps6/build/static/js/main.06c68c28.js.map",
+    "787.e8eabc5b.chunk.js.map": "/SI379/Problem-Sets/ps6/build/static/js/787.e8eabc5b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.22db94bf.css",
+    "static/js/main.06c68c28.js"
+  ]
+}
