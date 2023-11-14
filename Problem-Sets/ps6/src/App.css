@@ -1,38 +1,65 @@
-.App {
+:root {
+  --picker-width: 300px;
+}
+p {
+  text-align: center;
+}
+#color-preview {
+  width: var(--picker-width);
+  height: 200px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+#user-guess{
+  width: var(--picker-width);
+  height: 200px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+#color-picker {
+  display: table;
+  width: var(--picker-width);
+  margin: auto;
+}
+#color-picker > .row {
+  display: table-row;
+  height: var(--row-height);
+  font-size: large;
+}
+.row{
+  font-size: large;
+}
+
+#color-picker > .row > .component-color-preview {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 3px;
+  padding-right: 3px;
+  text-align: right;
+  font-weight: bold;
+}
+
+#color-picker input[type="number"] {
+  width: 48px;
+  height: var(--row-height);
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#color-picker input[type="range"] {
+  position: relative;
+  top: 5px;
+  background-color: red;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#cheating-mode{
+  text-align: right;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button{
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 20px;
+  align-content: center;
 }
