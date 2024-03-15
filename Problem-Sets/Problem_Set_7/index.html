@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css"> 
+  <script src="https://kit.fontawesome.com/9a78fcfa48.js" crossorigin="anonymous"></script>
+  <title>Lemon Timer App</title> 
+</head>
+<body>
+
+  <!-- <i class="fa-solid fa-lemon" style="color: #f3de59;"></i> -->
+  <div id="app">
+    <h1>Lemon Timer</h1><i class="fa-solid fa-lemon" style="color: #f3de59;"></i><i class="fa-solid fa-lemon" style="color: #f3de59;"></i><i class="fa-solid fa-lemon" style="color: #f3de59;"></i>
+    <div>
+      <label for="taskName">Task Name:</label>
+      <input type="text" id="taskName" placeholder="Enter task name">
+    </div>
+    <div>
+      <label for="taskDescription">Task Description:</label>
+      <input type="text" id="taskDescription" placeholder="Enter task description">
+    </div>
+    <button id="addTaskButton">Add Task</button>
+    <ul id="taskList"></ul>
+    <span class="label">Work Duration:</span>
+     <input type="number" id="workDuration" value="25">
+    <div id="timer">
+      <label for="breakDuration">Break Duration (minutes):</label>
+      <input type="number" id="breakDuration" value="5">
+      <div id="timerLabel">Time Remaining:</div>
+      <div id="timerDisplay">25:00</div>
+      <div id="sessionStatus">Work Session</div>
+    </div>
+   
+
+    <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('addTaskButton').addEventListener('click', addTask);
+        document.getElementById('startButton').addEventListener('click', startSession);
+        document.getElementById('stopButton').addEventListener('click', stopSession);
+    });
+  </script>
+</body>
+</html>
+
+
