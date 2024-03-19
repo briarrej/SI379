@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="style.css"> 
   <script src="https://kit.fontawesome.com/9a78fcfa48.js" crossorigin="anonymous"></script>
   <title>Lemon Timer App</title> 
+  <script src="script.js"></script>
 </head>
 <body>
 
@@ -27,6 +28,7 @@
     <div id="timer">
       <label for="breakDuration">Break Duration (minutes):</label>
       <input type="number" id="breakDuration" value="5">
+      <div id="selectedTaskName"></div>
       <div id="timerLabel">Time Remaining:</div>
       <div id="timerDisplay">25:00</div>
       <div id="sessionStatus">Work Session</div>
@@ -37,7 +39,7 @@
     <button id="stopButton">Stop</button>
   </div>
 
-  <script src="script.js"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('addTaskButton').addEventListener('click', addTask);

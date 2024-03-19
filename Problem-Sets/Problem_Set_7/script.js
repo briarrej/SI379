@@ -12,8 +12,11 @@ document.addEventListener('DOMContentLoaded', function () {
         taskListElement.innerHTML = '';
         tasks.forEach((task, index) => {
             const li = document.createElement('li');
+            li.className = index === selectedTaskIndex ? 'selected-task' : ''; // Check if the index matches selectedTaskIndex
             li.innerHTML = `
-                <span class="editable" contenteditable="true" onblur="updateTaskName(${index}, this)">${task.name}</span> - 
+                <span class="editable" contenteditable="true" onblur="updateTaskName(${index}, this)">
+                    ${task.name}
+                </span> - 
                 <span class="editable" onclick="editTaskDescription(${index})">${task.description}</span> 
                 (${task.workSessions} sessions)
                 <button class="removeButton" data-index="${index}">Remove</button>
@@ -22,16 +25,37 @@ document.addEventListener('DOMContentLoaded', function () {
             taskListElement.appendChild(li);
         });
     }
+    
+    
 
     function addTask() {
-        const [taskName, taskDescription] = [document.getElementById('taskName').value.trim(), document.getElementById('taskDescription').value.trim()];
-        if (taskName) {
-            tasks.push({ name: taskName, description: taskDescription, workSessions: 0 });
-            updateTaskList();
-            [document.getElementById('taskName').value, document.getElementById('taskDescription').value] = ['', ''];
-            localStorage.setItem('tasks', JSON.stringify(tasks));
+        const taskNameInput = document.getElementById('taskName');
+        const taskDescriptionInput = document.getElementById('taskDescription');
+    
+        if (!taskNameInput || !taskDescriptionInput) {
+            console.error('Task name or description input elements not found.');
+            return;
         }
+    
+        const taskName = taskNameInput.value.trim();
+        const taskDescription = taskDescriptionInput.value.trim();
+    
+        if (!taskName) {
+            console.error('Task name is empty.');
+            return;
+        }
+    
+        tasks.push({ name: taskName, description: taskDescription, workSessions: 0 });
+        updateTaskList();
+    
+        // Clear input fields
+        taskNameInput.value = '';
+        taskDescriptionInput.value = '';
+    
+        // Store tasks in local storage
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
+    
 
     function removeTask(index) {
         tasks.splice(index, 1);
@@ -39,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
-    function updateTaskName(index, element) {
+    function updateTaskName (index, element) {
         tasks[index].name = element.textContent.trim();
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
@@ -56,7 +80,19 @@ document.addEventListener('DOMContentLoaded', function () {
     function selectTask(index) {
         selectedTaskIndex = index;
         secondsLeft = 0;
+        updateTaskList();
+        displaySelectedTaskName(); // Call function to display selected task name
     }
+    
+    function displaySelectedTaskName() {
+        const selectedTaskNameElement = document.getElementById('selectedTaskName');
+        if (selectedTaskIndex !== null) {
+            selectedTaskNameElement.textContent = `Selected Task: ${tasks[selectedTaskIndex].name}`;
+        } else {
+            selectedTaskNameElement.textContent = '';
+        }
+    }
+    
 
     function startSession() {
         if (selectedTaskIndex === null) return alert('Please select a task before starting a session.');
