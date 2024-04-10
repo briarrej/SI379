@@ -8,29 +8,30 @@
 }
 body {
     display: flex;
-    padding: 0 10px;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     background: #00274c; /* Blue color */
 }
 .container {
+    max-width: 1000px; /* Adjust maximum width as needed */
+    width: 90%; /* Adjust width as needed */
     display: flex;
-    width: 850px;
-    gap: 70px;
-    padding: 60px 40px;
+    flex-direction: column; /* Stack elements vertically on smaller screens */
+    gap: 40px; /* Adjust gap between elements */
+    padding: 60px; /* Adjust padding */
     background: #ffcb05; /* Yellow color */
     border-radius: 10px;
-    align-items: flex-end;
-    justify-content: space-between;
+    align-items: center; /* Center horizontally */
+    justify-content: center;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 .hangman-box img {
     user-select: none;
-    max-width: 270px;
+    max-width: 100%; /* Ensure image doesn't overflow container */
 }
 .hangman-box h1 {
-    font-size: 1.45rem;
+    font-size: 1.8rem; /* Adjust font size */
     text-align: center;
     margin-top: 20px;
     text-transform: uppercase;
@@ -45,20 +46,20 @@ body {
 }
 .word-display .letter {
     width: 28px;
-    font-size: 2rem;
+    font-size: 1.5rem; /* Adjust font size */
     text-align: center;
     font-weight: 600;
-    margin-bottom: 40px;
+    margin-bottom: 20px; /* Adjust spacing */
     text-transform: uppercase;
     border-bottom: 3px solid #000;
 }
 .word-display .letter.guessed {
-    margin: -40px 0 35px;
+    margin: -20px 0 15px;
     border-color: transparent;
 }
 .game-box h4 {
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1.3rem; /* Adjust font size */
     font-weight: 500;
     margin-bottom: 15px;
 }
@@ -73,7 +74,7 @@ body {
     display: flex;
     gap: 5px;
     flex-wrap: wrap;
-    margin-top: 40px;
+    margin-top: 30px; /* Adjust spacing */
     justify-content: center;
 }
 :where(.game-modal, .keyboard) button {
@@ -151,38 +152,61 @@ body {
     padding: 12px 23px;
 }
 
-@media (max-width: 782px) {
+@media (max-width: 768px) {
     .container {
-        flex-direction: column;
-        padding: 30px 15px;
-        align-items: center;
-    }
-    .hangman-box img {
-        max-width: 200px;
+        padding: 40px; /* Adjust padding */
     }
     .hangman-box h1 {
-        display: none;
+        font-size: 1.5rem; /* Adjust font size */
     }
     .game-box h4 {
-        font-size: 1rem;
+        font-size: 1.1rem; /* Adjust font size */
     }
     .word-display .letter {
-        margin-bottom: 35px;
-        font-size: 1.7rem;
+        margin-bottom: 15px; /* Adjust spacing */
     }
     .word-display .letter.guessed {
-        margin: -35px 0 25px;
+        margin: -15px 0 10px;
     }
-    .game-modal img {
-        max-width: 120px;
+    .game-box .keyboard {
+        margin-top: 20px; /* Adjust spacing */
+    }
+    .keyboard button {
+        padding: 6px; /* Adjust padding */
+    }
+    .game-modal .content {
+        padding: 20px; /* Adjust padding */
     }
     .game-modal h4 {
-        font-size: 1.45rem;
+        font-size: 1.3rem; /* Adjust font size */
     }
     .game-modal p {
-        font-size: 1.1rem;
+        font-size: 1rem; /* Adjust font size */
+        margin: 10px 0 20px; /* Adjust margin */
     }
     .game-modal button {
-        padding: 10px 18px;
+        padding: 10px 20px; /* Adjust padding */
     }
 }
+
+
+.countdown-timer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.countdown {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+}
+
+.countdown-message {
+    text-align: center;
+    margin-bottom: 10px; /* Add some space below the message */
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+}
+
+
