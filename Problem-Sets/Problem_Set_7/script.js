@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
             taskListElement.appendChild(li);
         });
     }
+    
 
     function addTask() {
         const taskNameInput = document.getElementById('taskName');
