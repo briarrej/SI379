@@ -1,3 +1,4 @@
+//commits are currently not working!!!!!!!
 document.addEventListener('DOMContentLoaded', function () {
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     let { selectedTaskIndex, workDuration, breakDurationInput } = { ...JSON.parse(localStorage.getItem('timerState')) };
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
             taskListElement.appendChild(li);
         });
     }
-    
+
 
     function addTask() {
         const taskNameInput = document.getElementById('taskName');
