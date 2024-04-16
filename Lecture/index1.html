@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Trivia Question</title>
+        <script src="https://confetti.js.org/"></script>
+    </head>
+    <body>
+       <button id = 'correct'>press</button>
+       <h1 id="question1"></h1>
+        <script>
+            const url = "https://the-trivia-api.com/v2/questions"
+            fetch(url)
+            .then((response)=>{
+                return response.json()
+            })
+            .then((question)=>{
+                const questionn = question[0]
+                console.log(questionn)
+                const question1 = document.querySelector('#question1')
+                question1.textContent=questionn.question.text
+                idx = 0
+                correctAnswer = document.querySelector('#correct')
+                //console.log(questionn.incorrectAnswers[idx])
+                for(answer of questionn.incorrectAnswers){
+                   console.log(answer);
+                  // idx+=1
+                }
+
+
+            })
+          //fetch 1 question
+          
+        </script>
+    </body>
+</html>

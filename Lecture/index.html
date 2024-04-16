@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>This is a page for dogs</title>
+    </head>
+    
+    <body>
+        <button id ='btn'>Click for a dog!</button>
+        <h1>
+        <img src=''> 
+        </h1>
+        <script>
+            const btn = document.querySelector('#btn');
+            const url = "https://dog.ceo/api/breeds/image/random";
+            btn.addEventListener('click', ()=> {
+               fetch(url)
+               .then((response)=>{return response.json()})
+               
+               .then((data)=>{
+                console.log(data)
+                const img = document.querySelector('img');
+                img.setAttribute('src', data.message)
+
+               });
+
+            });
+
+
+        </script>
+    </body>
+</html>

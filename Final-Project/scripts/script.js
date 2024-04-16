@@ -29,7 +29,7 @@ async function getRandomWordAndDefinition() {
 
             // Check if the random word contains only alphabetical letters
             if (!randomWord.match(/^[a-zA-Z]+$/)) {
-                continue; // Skip this word and fetch another one
+                continue; 
             }
 
             // Fetch definition for the random word

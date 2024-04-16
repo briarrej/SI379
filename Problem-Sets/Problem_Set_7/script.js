@@ -25,37 +25,34 @@ document.addEventListener('DOMContentLoaded', function () {
             taskListElement.appendChild(li);
         });
     }
-    
-    
 
     function addTask() {
         const taskNameInput = document.getElementById('taskName');
         const taskDescriptionInput = document.getElementById('taskDescription');
-    
+
         if (!taskNameInput || !taskDescriptionInput) {
             console.error('Task name or description input elements not found.');
             return;
         }
-    
+
         const taskName = taskNameInput.value.trim();
         const taskDescription = taskDescriptionInput.value.trim();
-    
+
         if (!taskName) {
             console.error('Task name is empty.');
             return;
         }
-    
+
         tasks.push({ name: taskName, description: taskDescription, workSessions: 0 });
         updateTaskList();
-    
+
         // Clear input fields
         taskNameInput.value = '';
         taskDescriptionInput.value = '';
-    
+
         // Store tasks in local storage
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
-    
 
     function removeTask(index) {
         tasks.splice(index, 1);
@@ -63,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
-    function updateTaskName (index, element) {
+    function updateTaskName(index, element) {
         tasks[index].name = element.textContent.trim();
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
@@ -83,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateTaskList();
         displaySelectedTaskName(); // Call function to display selected task name
     }
-    
+
     function displaySelectedTaskName() {
         const selectedTaskNameElement = document.getElementById('selectedTaskName');
         if (selectedTaskIndex !== null) {
@@ -92,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function () {
             selectedTaskNameElement.textContent = '';
         }
     }
-    
 
     function startSession() {
         if (selectedTaskIndex === null) return alert('Please select a task before starting a session.');
@@ -107,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
             timerInterval = setInterval(() => {
                 timerElement.textContent = formatTime(secondsLeft);
                 if (secondsLeft <= 0) clearInterval(timerInterval), startBreak();
-                secondsLeft--, saveTimerState();
+                secondsLeft--, saveTimer();
             }, 1000);
             sessionInProgress = true;
         }
@@ -118,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
         timerInterval = setInterval(() => {
             timerElement.textContent = formatTime(secondsLeft);
             if (secondsLeft <= 0) clearInterval(timerInterval), startBreak();
-            secondsLeft--, saveTimerState();
+            secondsLeft--, saveTimer();
         }, 1000);
         sessionStatusLabel.textContent = 'Work Session';
     }
@@ -133,29 +129,19 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('tasks', JSON.stringify(tasks));
         selectedTaskIndex = null;
         sessionInProgress = false;
-        playTone(), secondsLeft = breakDuration * 60;
+        secondsLeft = breakDuration * 60;
         timerInterval = setInterval(() => {
             timerElement.textContent = formatTime(secondsLeft);
             if (secondsLeft <= 0) clearInterval(timerInterval), startSession();
-            secondsLeft--, saveTimerState();
+            secondsLeft--, saveTimer();
         }, 1000);
-    }
-
-    function playTone() {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        oscillator.connect(audioContext.destination);
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-        oscillator.start();
-        oscillator.stop(audioContext.currentTime + 1);
     }
 
     function stopSession() {
         clearInterval(timerInterval);
         sessionInProgress = false;
         selectedTaskIndex = null;
-        saveTimerState();
+        saveTimer();
     }
 
     function addLemonIcon() {
@@ -172,12 +158,12 @@ document.addEventListener('DOMContentLoaded', function () {
         return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
     }
 
-    function saveTimerState() {
+    function saveTimer() {
         const timerState = { selectedTaskIndex, workDuration, breakDuration, sessionInProgress, secondsLeft };
         localStorage.setItem('timerState', JSON.stringify(timerState));
     }
 
-    breakDurationInput?.addEventListener('change', function () { breakDuration = parseInt(breakDurationInput.value, 10) || 5, saveTimerState() });
+    breakDurationInput?.addEventListener('change', function () { breakDuration = parseInt(breakDurationInput.value, 10) || 5, saveTimer() });
     document.getElementById('addTaskButton')?.addEventListener('click', addTask);
     document.getElementById('startButton')?.addEventListener('click', startSession);
     document.getElementById('stopButton')?.addEventListener('click', stopSession);
@@ -192,3 +178,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateTaskList();
 });
+``
