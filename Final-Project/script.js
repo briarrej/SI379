@@ -4,6 +4,40 @@ const keyboardDiv = document.querySelector(".keyboard");
 const hangmanImage = document.querySelector(".hangman-box img");
 const gameModal = document.querySelector(".game-modal");
 const playAgainBtn = gameModal.querySelector("button");
+const winCounter = document.querySelector(".win-counter");
+// Add event listener to detect when the page is being unloaded
+window.addEventListener('beforeunload', () => {
+    localStorage.setItem('hangmanWins', 0); // Reset wins to 0 in local storage
+});
+
+
+let currentWord, correctLetters = [], wrongGuessCount = 0;
+// Initialize wins from local storage or default to 0
+let wins = parseInt(localStorage.getItem('hangmanWins')) || 0;
+const maxGuesses = 6;
+let remainingTime = 40; // Initial time in seconds
+let countdownInterval;
+
+const updateWinCounter = () => {
+
+    if (winCounter) {
+        winCounter.textContent = wins;
+        //if (wins >= 3) {
+           // gameOver(true, "Congratulations, you guessed three words correctly! Game over!");
+       // }
+    } else {
+        console.error("Win counter element not found.");
+    }
+};
+
+
+
+
+// Save wins to local storage
+const saveWinsToLocalStorage = () => {
+    localStorage.setItem('hangmanWins', wins);
+};
+
 
 // Function to fetch a random word and its definition from the Words API
 async function getRandomWordAndDefinition() {
@@ -54,10 +88,10 @@ async function getRandomWordAndDefinition() {
 }
 
 // Initializing game variables
-let currentWord, correctLetters = [], wrongGuessCount = 0;
-const maxGuesses = 6;
-let remainingTime = 40; // Initial time in seconds
-let countdownInterval;
+//let currentWord, correctLetters = [], wrongGuessCount = 0;
+//const maxGuesses = 6;
+//let remainingTime = 40; // Initial time in seconds
+//let countdownInterval;
 
 // Function to start the countdown timer
 const startCountdown = () => {
@@ -105,17 +139,19 @@ const resetGame = async () => {
     hangmanImage.src = "images/hangman-0.svg";
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
     remainingTime = 40; // Reset remaining time
-    
+
     // Clear word display before adding blanks for the new word
-    wordDisplay.innerHTML = ""; 
-    
+    wordDisplay.innerHTML = "";
+
+    updateWinCounter();
+
     clearInterval(countdownInterval);
     // Get a new word
     await getRandomWord();
 
     // Log currentWord length for debugging
     console.log("Current word length:", currentWord.length);
-    
+
     // Add blank spaces for each alphabetic character or space in the current word
     for (let i = 0; i < currentWord.length; i++) {
         const char = currentWord[i];
@@ -130,21 +166,25 @@ const resetGame = async () => {
             wordDisplay.appendChild(blankSpace);
         }
     }
-    
+// Within resetGame function
+   // updateWinCounter();
+
+
     // Log the number of blanks added to wordDisplay
     console.log("Number of blanks added:", wordDisplay.querySelectorAll(".letter").length);
-    
+
     // Enable all keyboard buttons
     keyboardDiv.querySelectorAll("button").forEach(btn => btn.disabled = false);
-    
+
     // Start the countdown timer
     startCountdown();
-    
+
     // Hide the game modal if it's visible
     gameModal.classList.remove("show");
-    
+
     // Reset word position (if needed)
     wordPosition = 0;
+
 };
 
 const getRandomWord = async () => {
@@ -156,22 +196,36 @@ const getRandomWord = async () => {
     }
 };
 
-const gameOver = (isVictory) => {
+const gameOver = (isVictory, message) => {
     // After game complete, show modal with relevant details
-    const modalText = isVictory ? `You found the word:` : 'The correct word was:';
+    const modalText = isVictory ? message : 'The correct word was:';
     gameModal.querySelector("img").src = `images/${isVictory ? 'victory' : 'lost'}.gif`;
-    gameModal.querySelector("h4").innerText = isVictory ? 'Congrats!' : 'Game Over!';
-    gameModal.querySelector("p").innerHTML = `${modalText} <b>${currentWord}</b>`;
+    gameModal.querySelector("h4").innerText = isVictory ? 'Congrats!' : 'Wrong guess';
+    gameModal.querySelector("p").innerHTML = `<b>${currentWord}</b>`;
     gameModal.classList.add("show");
 
     clearInterval(countdownInterval);
+
+    // Increment win count if the player wins
+    if (isVictory) {
+        wins++;
+        saveWinsToLocalStorage(); // Save wins to local storage
+        updateWinCounter();
+    }
+
+    // Check if the game is over due to reaching the win limit
+    //if (wins >= 3) {
+       //updateWinCounter();
+   // }
 };
+
+
 
 // Update the initGame function to create the correct number of <li> elements
 let wordPosition = 0;
 
 const initGame = (button, clickedLetter) => {
-    
+
     if (currentWord.includes(clickedLetter)) {
         // If the clicked letter is in the current word
         [...currentWord].forEach((letter, index) => {
@@ -199,6 +253,7 @@ const initGame = (button, clickedLetter) => {
     if (correctLetters.length === currentWord.length) return gameOver(true); // Check if the word is complete
 };
 
+
 // Creating keyboard buttons and adding event listeners
 for (let i = 97; i <= 122; i++) {
     const button = document.createElement("button");
@@ -208,6 +263,7 @@ for (let i = 97; i <= 122; i++) {
     keyboardDiv.appendChild(button);
     button.addEventListener("click", (e) => initGame(e.target, letter));
 }
+
 // Function to handle keyboard input
 const handleKeyboardInput = (event) => {
     const keyPressed = event.key.toLowerCase();
