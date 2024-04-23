@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - www.codingnepalweb.com -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="scripts/script.js" defer></script>
-    <title>Hangman Game JavaScript | CodingNepal</title>
+    <title>Hangman Game JavaScript</title>
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
     <div class="game-modal">
@@ -15,6 +12,7 @@
             <img src="images/lost.gif" alt="gif">
             <h4>Game Over!</h4>
             <p>The correct word was: <b class="correct-word">rainbow</b></p>
+            <p>Wins: <span class="win-counter">0</span></p>
             <button class="play-again">Play Again</button>
         </div>
     </div>
@@ -46,14 +44,18 @@
                 Hint: 
                 <span class="hint-content"><b></b></span>
             </h4>
-            
-            </h4>
             <h4 class="guesses-text">
                 Incorrect guesses: 
                 <b class="incorrect-guesses">0 / 6</b>
             </h4>
+             <h4 class="win-counter-text">
+                 Wins: <span class="win-counter">0</span>
+            </h4>        
             <div class="keyboard"></div>
         </div>
     </div>
+
+    <!-- Include script tag for your JavaScript file -->
+    <script src="script.js" defer></script>
 </body>
 </html>
